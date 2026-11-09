@@ -1,0 +1,1 @@
+Ilagay dito ang tf.min.js (i-download ang https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js at i-save bilang lib/tf.min.js). Kailangan ito para gumana offline.
