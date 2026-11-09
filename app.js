@@ -17,7 +17,7 @@ tips:"<b>Tips for a clear scan</b><br>• Good lighting<br>• One seed type, ce
 hint:"Place the seed inside the frame",camBlocked:"Camera is blocked. Click the 🔒 in the address bar › Camera › Allow, then press the green button.",camNone:"No camera found on this device. Use 🖼 to choose a photo.",camBusy:"Another app is using the camera (e.g. Zoom or Teams). Close it, then press the green button.",camFail:"Could not open the camera. Press the green button to try again, or use 🖼.",
 analyzing:"Analyzing…",downloading:p=>"Downloading the AI (one time only)… "+p+"%",
 ready:n=>n?`✓ AI model ready · recognizes ${n} seeds.`:`⚠ No trained model in model/ yet. Scanning is off until it is added.`,
-noSeedPhoto:"No seed detected in the photo.",notSure:(p,n)=>`Not sure which seed this is (${p}% for ${n}).`,noSupported:"No supported seed detected.",tryCloser:"Try a closer, brighter shot of one seed type.",
+noSeedPhoto:"No seed detected in the photo.",notSure:()=>"The item could not be identified clearly.",noSupported:"No supported seed detected.",tryCloser:"Try a closer, brighter shot of one seed type.",
 errModel:"The AI model files could not be loaded. Please try again later.",errTf:"TensorFlow.js could not load. Check your internet connection and refresh.",errZs:"The built-in AI could not load. Check your internet (about 90 MB on first use) and try again.",errScan:"Scan failed. Please try again.",noModel:"No trained model installed yet. Add it to the model/ folder.",
 back:"‹ Back",demoTag:"DEMO · random result, not real AI",confidence:"confidence",soilBtn:"Check soil suitability",done:"Done",
 noData:"⚠ No planting data for this seed yet. Add it to seeds.js.",harvest:(a,b)=>a>=730?`Fruits in about ${Math.round(a/365)}–${Math.round(b/365)} years`:`Harvest in ${a}–${b} days`,
@@ -52,7 +52,7 @@ tips:"<b>Mga tip para sa malinaw na scan</b><br>• Maliwanag ang ilaw<br>• Is
 hint:"Ilagay ang binhi sa loob ng frame",camBlocked:"Naka-block ang camera. I-click ang 🔒 sa address bar › Camera › Allow, tapos pindutin ang berdeng button.",camNone:"Walang nakitang camera sa device na ito. Gamitin ang 🖼 para pumili ng larawan.",camBusy:"Ginagamit ng ibang app ang camera (hal. Zoom o Teams). Isara ito, tapos pindutin ang berdeng button.",camFail:"Hindi mabuksan ang camera. Pindutin ang berdeng button para subukan ulit, o gamitin ang 🖼.",
 analyzing:"Sinusuri…",downloading:p=>"Dina-download ang AI (isang beses lang)… "+p+"%",
 ready:n=>n?`✓ Handa na ang AI model · nakikilala ang ${n} binhi.`:`⚠ Wala pang trained model sa model/. Hindi pa gagana ang scan.`,
-noSeedPhoto:"Walang nakitang binhi sa larawan.",notSure:(p,n)=>`Hindi sigurado kung anong binhi ito (${p}% para sa ${n}).`,noSupported:"Walang nakitang suportadong binhi.",tryCloser:"Subukan ang mas malapit at mas maliwanag na kuha ng isang uri ng binhi.",
+noSeedPhoto:"Walang nakitang binhi sa larawan.",notSure:()=>"Hindi malinaw kung anong binhi ito.",noSupported:"Walang nakitang suportadong binhi.",tryCloser:"Subukan ang mas malapit at mas maliwanag na kuha ng isang uri ng binhi.",
 errModel:"Hindi ma-load ang mga file ng AI model. Pakisubukan ulit mamaya.",errTf:"Hindi ma-load ang TensorFlow.js. Tingnan ang internet at i-refresh.",errZs:"Hindi ma-load ang built-in AI. Tingnan ang internet (mga 90 MB sa unang gamit) at subukan ulit.",errScan:"Hindi natuloy ang scan. Pakisubukan ulit.",noModel:"Wala pang na-install na trained model. Ilagay sa folder na model/.",
 back:"‹ Bumalik",demoTag:"DEMO · random na resulta, hindi totoong AI",confidence:"kumpiyansa",soilBtn:"Suriin ang lupa",done:"Tapos na",
 noData:"⚠ Wala pang planting data ang binhing ito. Idagdag ito sa seeds.js.",harvest:(a,b)=>a>=730?`Mamumunga sa mga ${Math.round(a/365)}–${Math.round(b/365)} taon`:`Aanihin sa loob ng ${a}–${b} araw`,
@@ -117,7 +117,7 @@ sn>=s.sun?A("ok",t("lSun"),t("sOk",s.en),10):sn>=s.sun-2?A("wn",t("lSun"),t("sLo
 inS?A("ok",t("lSeason"),t("seOk",M[NOW-1]),10):A("wn",t("lSeason"),t("seNo",M[NOW-1]),3);
 const v=p>=75?["ok",t("vOk")]:p>=50?["wn",t("vWn")]:["no",t("vNo")],I={ok:"✓",wn:"!",no:"✕"};
 const o=$("#sout");o.hidden=false;o.innerHTML=`<h2>${t("result")} <small>— ${s.en}</small></h2><div class="gauge ${v[0]}"><svg viewBox="0 0 160 90"><path d="M10 80A70 70 0 0 1 150 80" fill="none" stroke="var(--line)" stroke-width="12" stroke-linecap="round"/><path d="M10 80A70 70 0 0 1 150 80" fill="none" stroke="var(--c)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${p/100*220} 220"/></svg><b>${p}</b></div><div style="text-align:center"><span class="verdict ${v[0]}">${v[1]}</span></div>`+r.map(c=>`<div class="chk ${c[0]}"><i>${I[c[0]]}</i><div><b>${c[1]}</b><span>${c[2]}</span></div></div>`).join("")+`<p class="note">${t("estimate")}</p>`;o.scrollIntoView({behavior:"smooth"})};
-function renderH(){$("#hl").innerHTML=hist.length?hist.map((h,i)=>{const s=find(h.id);return `<div class="hr"><div><b>${s.e} ${s.tl} (${s.en})</b><small>${h.ts} · ${h.c.toFixed(1)}%</small></div><button class="btn g" data-h="${h.id}">${t("viewGuide")}</button></div>`}).join(""):`<p class="note" style="margin-top:14px">${t("noScans")}</p>`;$$("[data-h]").forEach(b=>b.onclick=()=>go("guide",b.dataset.h))}
+function renderH(){$("#hl").innerHTML=hist.length?hist.map((h,i)=>{const s=find(h.id);return `<div class="hr"><div><b>${s.e} ${s.tl} (${s.en})</b><small>${h.ts}</small></div><button class="btn g" data-h="${h.id}">${t("viewGuide")}</button></div>`}).join(""):`<p class="note" style="margin-top:14px">${t("noScans")}</p>`;$$("[data-h]").forEach(b=>b.onclick=()=>go("guide",b.dataset.h))}
 $("#clr").onclick=()=>{hist=[];saveH();renderH();toast(t("histCleared"))};
 $("#exp").onclick=async()=>{const x=hist.map(h=>`${h.ts} - ${find(h.id).tl} (${find(h.id).en}) - ${h.c}%`).join("\n")||t("noScansTxt");try{await navigator.clipboard.writeText(x);toast(t("histCopied"))}catch(e){toast(t("noCopy"))}};
 // ---- Scan ----
@@ -166,8 +166,8 @@ const pr=Array.from(await p.data());p.dispose();const o=pr.map((c,i)=>[c,i]).sor
 return{top:o.slice(0,3),conf:o[0][0],margin:o[0][0]-o[1][0],name:labs[o[0][1]].toLowerCase()}}
 async function identifyModel(f){const img=new Image();img.src=URL.createObjectURL(f);await img.decode();
 const r=await predict(img,true),s=D.find(x=>x.id==r.name),a=r.top[0],b=r.top[1];
-if(r.name=="not_seed"||r.name.includes("hindi"))return{id:null,reason:()=>t("noSeedPhoto")};
-if(!s||r.conf<MIN_CONF||r.margin<.2)return{id:null,reason:()=>t("notSure",Math.round(r.conf*100),labels[a[1]])+" ("+labels[b[1]]+" "+Math.round(b[0]*100)+"%)"};
+if(r.name=="not_seed"&&r.conf>=MIN_CONF)return{id:null,reason:()=>t("noSeedPhoto")};
+if(!s||r.conf<MIN_CONF||r.margin<.2)return{id:null,reason:()=>t("notSure")};
 lastTy=null;if(s.types.length>1){try{const q=await predict(img,true,"model/types/"+s.id);if(q.conf>=.6&&q.margin>=.15)lastTy={name:q.name,conf:q.conf}}catch(e){}}
 return{id:s.id,c:r.conf*100}}
 let lastN=0,lastTy=null;const TMC={};
@@ -202,7 +202,7 @@ let live=null;
 async function liveStart(){clearTimeout(live);const h=$("#hint");if(!(await hasTrained()))return;try{await loadModel()}catch(e){return}
 let last=null,n=0;const tick=async()=>{if(!stream||!$("#cam").classList.contains("on"))return;const v=$("#vid");
 if(v.videoWidth){try{const r=await predict(v,false),s=D.find(x=>x.id==r.name);
-if(s&&r.conf>=MIN_CONF&&r.margin>=.2){h.textContent=`${s.e} ${lang=="tl"?s.tl:s.en} · ${Math.round(r.conf*100)}%`;h.classList.add("lock");n=r.name==last?n+1:1;last=r.name;if(n>=4){$("#shut").click();return}}
+if(s&&r.conf>=MIN_CONF&&r.margin>=.2){h.textContent=`${s.e} ${lang=="tl"?s.tl:s.en} · ${lang=="tl"?"Nakilala":"Recognized"}`;h.classList.add("lock");n=r.name==last?n+1:1;last=r.name;if(n>=4){$("#shut").click();return}}
 else{h.textContent=t("hint");h.classList.remove("lock");last=null;n=0}}catch(e){}}
 live=setTimeout(tick,300)};tick()}
 /* ===== AI MODE ===== "model" = totoong machine learning (galing sa training/train.py) | "demo" = random, pang-check ng UI lang */
@@ -229,8 +229,56 @@ try{const o=await outlined(file);if(o){url=o.url;lastN=o.n;$("#aimg").src=url}}c
 try{const r=await identify(file);if(!r||!find(r.id)){fail((r&&r.reason?r.reason():t("noSupported"))+"<br><small style='font:400 13px var(--sans);color:var(--mut)'>"+t("tryCloser")+"</small>");return}
 const c=Math.max(0,Math.min(100,+r.c||0));hist.unshift({id:r.id,c,ts:new Date().toLocaleString(t("loc"))});hist=hist.slice(0,30);saveH();lastDemo=!!r.demo;openRes(r.id,c,url)}
 catch(e){console.error(e);const m=e.code=="model",nt=e.code=="notf";fail(m?t("errModel"):nt?t("errTf"):e.code=="zs"?t("errZs"):t("errScan"));if(m){$("#dm").hidden=false}}}
-function openRes(id,c,img){const s=find(id),R=$("#res");R.innerHTML=`<div class="in"><button class="btn g" id="rbk" style="width:auto;padding:11px 18px;margin-bottom:12px">${t("back")}</button><div class="card" style="text-align:center">${lastDemo?`<span class="verdict wn">${t("demoTag")}</span>`:""}<div class="circ sm"><img src="${img}" alt=""></div><h2 style="font-size:28px">${s.tl}</h2><p style="margin:0">${s.en}</p>${typeHtml(s)}${lastN?`<small class="note">🔍 ${lastN} ${lang=="tl"?"binhi ang nakita":"seeds detected"}</small>`:""}<div class="cf"><span style="font-weight:700">${Math.round(c)}%</span><div class="bar"><i style="width:${c}%"></i></div><small class="note">${t("confidence")}</small></div></div><div class="card">${guide(s,true,lastTy&&lastTy.name)}</div><button class="btn" id="rsoil">${t("soilBtn")}</button><button class="btn g" id="rdone">${t("done")}</button></div>`;
-ov("res");R.scrollTop=0;R.onclick=e=>{const b=e.target.closest("[data-t]");if(b){lastTy={name:b.dataset.t,conf:1};openRes(id,c,img)}};$("#rbk").onclick=()=>ov(null);$("#rdone").onclick=()=>{ov(null);go("home")};$("#rsoil").onclick=()=>{ov(null);go("soil",id)}}
+const SEED_INFO={
+  atis:{en:"Atis seeds come from the segmented fruit of the sugar apple tree. Use mature, healthy seeds and remove all fruit pulp before planting.",tl:"Ang buto ng atis ay nagmumula sa bunga nito. Pumili ng malusog na buto at linisin muna ang natirang laman ng prutas."},
+  chico:{en:"Chico seeds are found inside the sweet brown fruit. Select firm, mature seeds and wash away the pulp before sowing.",tl:"Ang buto ng chico ay nasa loob ng kayumangging bunga. Pumili ng hinog at matibay na buto at linisin bago itanim."},
+  avocado:{en:"The avocado seed is the large pit inside the fruit. It can be started in water or planted in a well-draining potting mix.",tl:"Ang buto ng avocado ay ang malaking buto sa loob ng bunga. Maaari itong patubuin sa tubig o itanim sa lupang may maayos na drainage."},
+  guyabano:{en:"Soursop seeds are taken from ripe fruit. Clean and dry them briefly before sowing in a warm, moist seed-starting mix.",tl:"Kunin ang buto ng guyabano mula sa hinog na bunga. Linisin at patuyuin nang bahagya bago itanim sa mamasa-masang lupa."},
+  melon:{en:"Melon seeds are collected from mature fruit. Rinse off the pulp and allow the seeds to dry before planting.",tl:"Kunin ang buto ng melon mula sa hinog na bunga. Hugasan ang mga buto at patuyuin bago itanim."},
+  pakwan:{en:"Watermelon seeds should be taken from a mature fruit, cleaned, and planted in warm soil with enough space for vines.",tl:"Kunin ang buto ng pakwan mula sa hinog na bunga, linisin, at itanim sa mainit-init na lupa na may sapat na espasyo para gumapang ang baging."},
+  papaya:{en:"Papaya seeds are taken from ripe fruit. Remove the gelatinous coating, rinse well, and sow while fresh or after brief drying.",tl:"Kunin ang buto ng papaya mula sa hinog na bunga. Alisin ang madulas na balot, banlawan, at itanim habang sariwa o matapos patuyuin nang bahagya."},
+  rambutan:{en:"Rambutan seeds are best planted fresh because they can lose viability when they dry out. Clean off the fruit flesh before sowing.",tl:"Mas mainam itanim agad ang buto ng rambutan dahil maaaring mawalan ito ng kakayahang tumubo kapag natuyo. Alisin muna ang laman ng bunga."}
+};
+function seedDescription(s){
+  const d=SEED_INFO[s.id];
+  return d?(lang=="tl"?d.tl:d.en):(lang=="tl"?`Ito ang buto ng ${s.tl}. Pumili ng malusog na buto at sundin ang gabay sa pagtatanim.`:`This is a ${s.en} seed. Choose a healthy seed and follow the planting guide for the best start.`);
+}
+function openRecommendations(id){
+  const s=find(id);if(!s)return;
+  const title=lang=="tl"?"Mga rekomendasyon":"Seed recommendations";
+  const close=lang=="tl"?"Isara":"Close";
+  const intro=lang=="tl"?"Mga pangunahing hakbang para mapatubo at maalagaan ang binhing ito.":"Practical steps to help this seed germinate and grow.";
+  const labels=lang=="tl"
+    ? [["Lalim ng pagtatanim",s.dp],["Tinatayang pagtubo",s.g],["Pagdidilig",wTx(s)],["Sikat ng araw",uTx(s)],["Paalala","Gumamit ng malinis na lalagyan at lupang may maayos na drainage. Panatilihing mamasa-masa, hindi lubog sa tubig."]]
+    : [["Planting depth",s.dp],["Estimated germination",s.g],["Watering",wTx(s)],["Sunlight",uTx(s)],["Helpful reminder","Use a clean container and well-draining soil. Keep the soil moist, not waterlogged."]];
+  const modal=$("#recModal");
+  modal.innerHTML=`<div class="rec-backdrop" data-rec-close></div><section class="rec-sheet" role="dialog" aria-modal="true" aria-labelledby="recTitle"><div class="rec-handle"></div><div class="rec-head"><div><span class="rec-kicker">${lang=="tl"?"GABAY SA PAGTATANIM":"PLANTING GUIDE"}</span><h2 id="recTitle">${s.e} ${title}</h2><p>${s.tl} / ${s.en}</p></div><button class="rec-x" type="button" data-rec-close aria-label="${close}">×</button></div><p class="rec-intro">${intro}</p>${labels.map((x,i)=>`<div class="rec-item"><span class="rec-num">${i+1}</span><div><b>${x[0]}</b><p>${x[1]}</p></div></div>`).join("")}<button class="btn" type="button" data-rec-close>${close}</button></section>`;
+  modal.hidden=false;document.body.classList.add("modal-open");
+  modal.querySelectorAll("[data-rec-close]").forEach(b=>b.onclick=closeRecommendations);
+}
+function closeRecommendations(){const modal=$("#recModal");if(modal){modal.hidden=true;modal.innerHTML="";}document.body.classList.remove("modal-open")}
+function openRes(id,c,img){
+  const s=find(id),R=$("#res");
+  R.innerHTML=`<div class="in"><button class="btn g result-back" id="rbk" style="width:auto;padding:11px 18px;margin-bottom:12px">${t("back")}</button>
+  <div class="card result-card">
+    ${lastDemo?`<span class="verdict wn">${t("demoTag")}</span>`:""}
+    <div class="result-photo"><img src="${img}" alt="${s.tl} seed scan"></div>
+    <span class="result-status">✓ ${lang=="tl"?"Binhi ang nakilala":"Seed identified"}</span>
+    <h1 class="result-name">${s.tl}</h1><p class="result-sub">${s.en}</p>
+    <p class="result-description">${seedDescription(s)}</p>
+    ${typeHtml(s)}
+    ${lastN?`<small class="note result-note">🔍 ${lastN} ${lang=="tl"?"binhi ang nakita":"seeds detected"}</small>`:""}
+  </div>
+  <div class="card result-details"><h2>${lang=="tl"?"Mga detalye ng binhi":"Seed details"}</h2>${guide(s,true,lastTy&&lastTy.name)}</div>
+  <button class="btn recommendation-btn" id="recommendBtn">✦ ${lang=="tl"?"Tingnan ang mga rekomendasyon":"View Recommendations"}</button>
+  <button class="btn g" id="rsoil">${t("soilBtn")}</button><button class="btn g" id="rdone">${t("done")}</button></div>`;
+  ov("res");R.scrollTop=0;
+  R.onclick=e=>{const b=e.target.closest("[data-t]");if(b){lastTy={name:b.dataset.t,conf:1};openRes(id,c,img)}};
+  $("#rbk").onclick=()=>ov(null);
+  $("#recommendBtn").onclick=()=>openRecommendations(id);
+  $("#rdone").onclick=()=>{ov(null);go("home")};
+  $("#rsoil").onclick=()=>{ov(null);go("soil",id)};
+}
 function soilPhoto(f){if(!f)return;$("#sthumb").innerHTML=`<img class="thumb" src="${URL.createObjectURL(f)}" alt=""><p class="note" style="margin:8px 0 0">${t("photoNote")}</p>`}
 $("#sp1").onchange=e=>soilPhoto(e.target.files[0]);$("#sp2").onchange=e=>soilPhoto(e.target.files[0]);
 
@@ -255,7 +303,7 @@ go("home");
 /* ===== HOMEPAGE: 10s BinhiScan splash -> Get Started ===== */
 function landing(){const L=$("#land");if(!L)return;
 const LOGO='<svg class="logo" viewBox="0 0 100 100"><circle cx="50" cy="46" r="38" fill="#efe7c6"/><path d="M5 50Q50 120 95 50Q50 92 5 50Z" fill="#2f7d32"/><path d="M11 53Q50 104 89 53Q50 88 11 53Z" fill="#86c442"/><path class="st" d="M50 78C50 64 48 52 52 35" fill="none" stroke="#1c2a1c" stroke-width="3.4" stroke-linecap="round"/><path class="lf1" d="M50 63C40 65 31 59 27 48C40 46 48 53 50 63Z" fill="#3a9a3a"/><path class="lf2" d="M52 40C47 24 55 10 69 5C73 22 66 36 52 40Z" fill="#ee8a2b"/></svg>';
-const dots=Array.from({length:16},(_,i)=>`<i style="--x:${(i*37+8)%96}%;--s:${3+(i%4)*2}px;--d:${9+(i%5)*2.2}s;--l:${(i*0.9)%7}s"></i>`).join("");
+const dots=Array.from({length:6},(_,i)=>`<i style="--x:${(i*37+8)%96}%;--s:${3+(i%4)*2}px;--d:${9+(i%5)*2.2}s;--l:${(i*0.9)%7}s"></i>`).join("");
 const name="BinhiScan".split("").map((c,i)=>`<span style="--i:${i}">${c}</span>`).join("");
 L.innerHTML=`<div class="lbg">${dots}</div>
 <section class="ls"><div class="lseed"><span class="rg"></span><span class="rg"></span><span class="rg"></span><span class="core"></span>${LOGO}<u></u></div>
@@ -266,6 +314,6 @@ L.innerHTML=`<div class="lbg">${dots}</div>
 <p class="sb it" style="--k:2">Identify the seed. Learn how to plant it.</p>
 <div class="lpills it" style="--k:3"><span><svg class="ic"><use href="#i-cam"/></svg>Scan</span><span><svg class="ic"><use href="#i-guide"/></svg>Planting guide</span><span><svg class="ic"><use href="#i-sun"/></svg>Best months</span></div>
 <button class="btn it" id="lgo" style="--k:4">Get Started <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></section>`;
-setTimeout(()=>L.classList.add("go"),10000);
+setTimeout(()=>L.classList.add("go"),4800);
 $("#lgo").onclick=()=>{L.classList.add("off");go("home")}}
 landing();

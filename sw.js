@@ -1,5 +1,5 @@
-const V="binhiscan-v6";
-const CORE=["./","index.html","style.css","seeds.js","app.js","manifest.webmanifest","icon-192.png","icon-512.png","lib/tf.min.js","model/model.json","model/metadata.json","model/labels.json","model/weights.bin"];
+const V="binhiscan-v7";
+const CORE=["./","index.html","style.css","seeds.js","app.js","manifest.webmanifest","icon-192.png","icon-512.png","lib/tf.min.js","model/model.json","model/metadata.json","model/weights.bin"];
 self.addEventListener("install",e=>e.waitUntil((async()=>{
   const c=await caches.open(V);
   await Promise.all(CORE.map(async u=>{try{const r=await fetch(u,{cache:"no-store"});if(r.ok)await c.put(u,r)}catch(_){}}));

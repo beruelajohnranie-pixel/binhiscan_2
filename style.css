@@ -112,7 +112,7 @@ input[type=range]{width:100%;accent-color:var(--pri)}
 .cbar .rb{position:static;background:rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(8px)}
 #shut{background:#fff;border:4px solid var(--glow);box-shadow:0 0 0 4px rgba(255,255,255,.3),0 0 30px -4px var(--glow)}
 
-/* ===== homepage: splash (10s) -> get started ===== */
+/* ===== homepage: calm splash -> get started ===== */
 #land{position:fixed;inset:0;z-index:200;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#2c6b46 0%,#12301f 48%,#07130b 100%);color:#e8f5ec;transition:opacity .6s,visibility .6s}
 #land.off{opacity:0;visibility:hidden;pointer-events:none}
 #land .lbg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
@@ -170,3 +170,69 @@ input[type=range]{width:100%;accent-color:var(--pri)}
 @keyframes lshine{0%{left:-80px}45%,100%{left:120%}}
 #lgo .ic{width:20px;height:20px;transition:transform .25s}#lgo:active .ic{transform:translateX(4px)}
 @media (prefers-reduced-motion:reduce){#land *,#land *:before,#land *:after{animation-duration:.01s!important;animation-delay:0s!important}.lbar i{animation:lload 10s linear forwards!important}}
+
+
+/* ===== BinhiScan mobile-first scan/result refinement ===== */
+#ana{padding:calc(env(safe-area-inset-top,0px) + 18px) 18px calc(env(safe-area-inset-bottom,0px) + 24px);display:none;flex-direction:column;align-items:center;justify-content:center;overflow:auto}
+#ana.on{display:flex}
+#ana .circ{width:min(84vw,390px);height:auto;aspect-ratio:4/3;border-radius:24px;border:1px solid rgba(134,207,152,.28);margin:0 auto 22px;background:#08150e;box-shadow:0 18px 42px rgba(0,0,0,.24)}
+#ana .circ img{width:100%;height:100%;object-fit:contain}
+#ana .sweep{height:3px;background:linear-gradient(90deg,transparent,var(--glow),transparent);border:0;animation:sw 3.2s ease-in-out infinite}
+#atx{font:700 clamp(17px,4.5vw,21px)/1.35 var(--sans);max-width:440px;margin:0 auto 18px;padding:0 8px;text-align:center}
+#ana .rb{position:relative;top:auto;left:auto;align-self:flex-start;margin-bottom:18px}
+#retry{min-height:50px;min-width:150px;border-radius:16px}
+#res{padding:calc(env(safe-area-inset-top,0px) + 12px) 14px calc(env(safe-area-inset-bottom,0px) + 28px)}
+#res .in{max-width:520px}
+.result-card{padding:16px;text-align:left}
+.result-photo{width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;background:#08150e;border:1px solid var(--line);margin-bottom:16px}
+.result-photo img{width:100%;height:100%;object-fit:contain;display:block}
+.result-status{display:inline-flex;align-items:center;gap:6px;color:var(--ok);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.result-name{font:800 clamp(28px,8vw,36px)/1.08 var(--serif);margin:0;color:var(--ink)}
+.result-sub{margin:5px 0 12px;font-size:14px}
+.result-description{color:var(--ink);font-size:14px;line-height:1.65;margin:0 0 8px}
+.result-note{display:block;margin-top:12px}
+.result-details h2{margin-bottom:14px}
+.result-details .gh{margin-top:0}
+.recommendation-btn{background:linear-gradient(135deg,#8bd69b,#4f9b68);color:#092014;min-height:54px;font-weight:800}
+.result-back{min-height:44px}
+.rec-modal[hidden]{display:none}
+.rec-modal{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center}
+.rec-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);animation:recFade .22s ease both}
+.rec-sheet{position:relative;width:100%;max-width:560px;max-height:min(88dvh,780px);overflow:auto;background:#10251a;border:1px solid rgba(134,207,152,.22);border-radius:26px 26px 0 0;padding:12px 18px calc(env(safe-area-inset-bottom,0px) + 22px);box-shadow:0 -18px 60px rgba(0,0,0,.38);animation:recUp .28s cubic-bezier(.2,.8,.2,1) both}
+.rec-handle{width:42px;height:4px;border-radius:9px;background:#587261;margin:0 auto 18px}
+.rec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.rec-kicker{font-size:10px;letter-spacing:.12em;color:var(--pri);font-weight:800}
+.rec-head h2{font:700 23px/1.2 var(--serif);margin:5px 0}
+.rec-head p{font-size:13px;margin:0}
+.rec-x{width:38px;height:38px;flex:none;border:1px solid var(--line);border-radius:50%;background:#1a3827;color:var(--ink);font-size:25px;line-height:1}
+.rec-intro{font-size:14px;margin:18px 0 12px;color:#d3e4d5}
+.rec-item{display:flex;gap:12px;padding:13px 0;border-top:1px solid rgba(134,207,152,.14)}
+.rec-num{width:28px;height:28px;flex:none;border-radius:10px;display:grid;place-items:center;background:#244a32;color:#b9e8c2;font-weight:800;font-size:12px}
+.rec-item b{font-size:14px;display:block;margin:1px 0 4px}
+.rec-item p{font-size:13px;line-height:1.55;margin:0;color:#b5cbbb}
+.rec-sheet>.btn{margin:16px 0 0;min-height:48px}
+body.modal-open{overflow:hidden}
+@keyframes recFade{from{opacity:0}to{opacity:1}}
+@keyframes recUp{from{opacity:.7;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* A calmer, shorter opening animation: less visual noise and lower mobile load. */
+#land .lbg i{animation-duration:16s!important;opacity:.12!important}
+.lseed .rg{animation-duration:5s!important}
+.lseed .core{animation-duration:4.8s!important}
+.lseed .logo{animation:lpop 1.35s .2s ease-out forwards,lfloat 5s 1.6s ease-in-out infinite!important}
+.logo .lf1,.logo .lf2,.logo .st{animation-duration:1.35s!important}
+.lname span{animation-duration:1.1s!important;animation-delay:calc(1.1s + var(--i)*.12s)!important}
+.ltag2{animation-delay:2.6s!important}
+.lbar i{animation:lload 4.8s linear forwards!important}
+#land .ls,#land .lg2{transition:opacity .75s ease,visibility .75s ease}
+#land .lg2 .it{animation-duration:.75s!important}
+@media (max-width:380px){
+  .app{padding-left:12px;padding-right:12px}
+  .card{padding:16px;border-radius:20px}
+  .tab{left:8px;right:8px;height:66px}
+  .sc{width:64px;height:64px;top:-27px}
+  .rec-sheet{padding-left:15px;padding-right:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  #ana *,#res *,#recModal *,#land *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}

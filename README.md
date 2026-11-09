@@ -14,3 +14,14 @@ Wala nang built-in/online AI: kung walang model sa `model/`, hindi mag-i-scan an
 
 ## Training
 Tingnan ang `training/README.md`. (Teachable Machine export ay gumagana rin sa `model/`.)
+
+
+## Mobile scan experience (v7)
+- Mobile-first scan and result layout with a rectangular photo preview.
+- Scan result shows the seed name and a short description without raw prediction percentages.
+- Low-confidence predictions use a simple "could not identify clearly" message instead of exposing class scores.
+- Recommendations open in an in-app bottom-sheet popup with planting depth, germination estimate, watering, sunlight, and care reminders.
+- Reduced splash-screen motion and fewer decorative particles for a calmer startup on phones.
+- Service-worker cache version updated to `binhiscan-v7`.
+
+The trained model in `model/` is preserved. These interface changes do not retrain or replace the model.
